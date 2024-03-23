@@ -1,0 +1,176 @@
+body {
+    height: 100vh;
+    margin: 0px;
+    overflow: hidden;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+.chat-list {
+    background-color: gray;
+    width:30%;
+}
+.chat-list>div {
+    display:flex;
+    justify-content: space-between;
+    background-color: lightgreen;
+}
+.list-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2px;
+}
+.profile-pic {
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+}
+.button-list {
+    display: flex;
+}
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+}
+button:active {
+    background-color: gray !important;
+}
+button:hover {
+    background-color: lightgray;
+}
+.notification {
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    background-color: lightblue !important;
+    border-top: solid 1px darkcyan;
+    border-bottom: solid 1px darkcyan;
+}
+.notification-text {
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    border-top: solid 1px darkolivegreen;
+    border-bottom: solid 1px darkgrey;
+}
+.chat-small {
+    display:flex;
+    justify-content: space-between;
+    background-color: white;
+}
+.chat-small:hover {
+    background-color: lightgray !important;
+}
+.last-chat {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.time {
+    font-size: 9px;
+}
+.notify-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12px;
+    height: 12px;
+    background-color: green;
+    font-size: 8px;
+    color: white;
+    border-radius: 50%;
+}
+
+.current-chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(174, 224, 255);
+    border-left: solid 1px darkcyan;
+    width:100%;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(231, 231, 231);
+    border-bottom: solid 1px gray;
+    padding-bottom: 2px;
+}
+.user {
+    display:flex;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.name {
+    font-weight: bold;
+    color:rgb(199, 0, 0);
+}
+.chat-time {
+    text-align: end;
+    font-size: 10px;
+}
+.last-access {
+    font-size: 10px;
+    color: darkgray;
+}
+.opened-chat {
+    display:flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    overflow-y: auto;
+    margin-bottom: 5px;
+}
+.received {
+    display: flex;
+    justify-content: start;
+    margin-left: 5px;
+}
+.text-box-r {
+    background-color:rgb(229, 253, 184);
+}
+.sent {
+    display: flex;
+    justify-content: end;
+    margin-right: 5px;
+}
+.text-box-s {
+    background-color:rgb(255, 249, 221);
+}
+.text-box-r, .text-box-s {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 8px;
+    border: 10px;
+    margin:2px
+}
+.chat-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-top: solid 1px gray;
+    background-color: lightgreen !important;
+}
