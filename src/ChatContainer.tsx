@@ -1,13 +1,27 @@
-import React, { useState } from "react"
-import { useContacts } from "./db"
+import React from "react"
+import { useDB, Chat } from "./db"
 import { ChatSmall } from "./ChatSmall";
+import { useNavigate } from "react-router-dom";
 
-export function ChatContainer() {
-    const { contacts } = useContacts();
+export function ChatContainer({chatList}:{chatList:Chat[]}) {
+    const navigate = useNavigate();
+
+    const openChat = (chat:Chat) => {
+        chat.count='';
+        navigate('/chatlist/'+chat.id)
+    }
     
     return <>
         <div className="chat-container">
-			{contacts.map(c => <ChatSmall key={c.name} name={c.name} text={c.text} time={c.time} count={c.count}/>)}
+			{chatList.map(c => <ChatSmall
+                key={c.name}
+                name={c.name}
+                text={c.messages.length==0?'':c.messages[0].text}
+                time={c.messages.length==0?'':c.messages[0].time}
+                count={c.count}
+                onClick={() => openChat(c)}
+                />
+            )}
 		</div>
     </>
 }

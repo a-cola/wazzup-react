@@ -1,7 +1,34 @@
 import React from "react"
 import { ChatContainer } from "./ChatContainer"
+import { Chat, useDB } from "./db"
 
-export function ChatList () {
+interface ChatListProps {
+    chatList:Chat[];
+    addChat:(group:boolean, name:string)=>void;
+}
+
+export function ChatList ({chatList, addChat}:ChatListProps) {
+    const handleKeyUp = (e) => {
+        if(e.key === 'Enter') {
+            const name = e.target.value;
+            if(name.trim().length == 0) return;
+            addChat(false, name);
+            console.log(chatList)
+            e.target.value = '';
+        }
+    
+        if(e.key === 'Control') {
+            const name = e.target.value;
+            if(name.trim().length == 0) return;
+            addChat(true, name);
+            e.target.value = '';
+        }
+
+        if(e.key === 'Escape') {
+            e.target.value = '';
+        }
+    };
+
     return <>
         <section className="chat-list">
             <div className="list-header">
@@ -35,9 +62,13 @@ export function ChatList () {
                 </div>
             </div>
             <div className="search">
-                <input type="text" placeholder="Search or start a new chat" style={{width: "100%", padding:"2px", margin: "3px", borderRadius: "20px", paddingLeft: "8px"}}/>
+                <input type="text"
+                    placeholder="Search or start a new chat"
+                    style={{width: "100%", padding:"2px", margin: "3px", borderRadius: "20px", paddingLeft: "8px"}}
+                    onKeyUp={e=>handleKeyUp(e)}
+                    />
             </div>
-            <ChatContainer />
+            <ChatContainer chatList={chatList}/>
         </section>
     </>
 }

@@ -1,27 +1,34 @@
-import React, { useMemo, useState } from "react"
+import React, { useState } from "react"
 import { OpenedChat } from "./OpenedChat";
-import { useMessages } from "./db";
+import { useDB, MockDB } from "./db";
+import { useLoaderData } from "react-router-dom";
 
-export function CurrentChat () {
-    const {addMessage} = useMessages();
+export function CurrentChat ({addMessage}:{addMessage:(id:string, sr:'sent'|'received', msg:string)=>void}) {
+    const id = useLoaderData() as string;
 
-    const [state, setState] = useState(false);
+    const db = MockDB.getInstance();
 
-    const handleKeyDown = (e) => {
+    const isOnline = () => {
+        return Math.random() < 0.1 ? "online" : `Last access ${Math.floor(Math.random()*59+1)} minutes ago`;
+      }
+
+    const handleKeyUp = (e) => {
         if(e.key === 'Enter') {
-          const message = e.target.value;
-          if(message.trim().length == 0) return;
-          addMessage("sent", message);
-          e.target.value = '';
-          setState(!state);
+            const message = e.target.value;
+            if(message.trim().length == 0) return;
+            addMessage(id, "sent", message);
+            e.target.value = '';
         }
     
-        if(e.key === 'Tab') {
-          const message = e.target.value;
-          if(message.trim().length == 0) return;
-          addMessage("received", message);
-          e.target.value = '';
-          setState(!state);
+        if(e.key === 'Control') {
+            const message = e.target.value;
+            if(message.trim().length == 0) return;
+            addMessage(id, "received", message);
+            e.target.value = '';
+        }
+
+        if(e.key === 'Escape') {
+            e.target.value = '';
         }
     };
 
@@ -35,8 +42,8 @@ export function CurrentChat () {
                     </svg>
                 </div>
                 <div className="user-info">
-                    <span className="name">Hannah</span>
-                    <span className="last-access">Last access 15 minutes ago</span>
+                    <span className="name">{db.getChat(id)!.name}</span>
+                    <span className="last-access">{isOnline()}</span>
                 </div>
             </div>
             <button>
@@ -46,7 +53,7 @@ export function CurrentChat () {
             </button>
         </div>
 
-        <OpenedChat />
+        <OpenedChat id={id}/>
                 
         <div className="chat-text">
             <button className="emoticon">
@@ -58,7 +65,7 @@ export function CurrentChat () {
                 style={{width:"92%", height:"100%", borderRadius: "20px", paddingLeft: "15px"}}
                 placeholder="Type text..."
                 id="myInput"
-                onKeyDown={e=>handleKeyDown(e)}
+                onKeyUp={e=>handleKeyUp(e)}
                 />
             <button className="mic">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">

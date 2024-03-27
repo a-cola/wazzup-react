@@ -1,19 +1,22 @@
 import { useState } from 'react'
 
-export interface User {
+export interface Chat {
+    id: string;
+    group: boolean
     name: string
     text: string
     time: string
     count: string
+    messages: Message[]
 }
 
 export interface Message {
-    sr: 'sent'|'received'
+    sender: string
     text: string
     time: string
 }
 
-class MockDB {
+export class MockDB {
     static instance: MockDB
 
     static getInstance() {
@@ -31,63 +34,97 @@ class MockDB {
         return hours + ':' + minutes
     }
 
-    private lists:User[] = [
-        { name:"Hannah", text:"Che fai stasera?", time:this.getRandomTime(), count:`${Math.floor(Math.random()*35)}`},
-        { name:"Pippo", text:"Ok grazie", time:this.getRandomTime(), count:`${Math.floor(Math.random()*35)}`},
-        { name:"Andrea", text:"Abbiamo lo stesso nome ahahha", time:`${Math.floor(Math.random()*24)}:${Math.floor(Math.random()*60).toString().padStart(2,'0')}`, count:`${Math.floor(Math.random()*35)}`},
-        { name:"Paolo", text:"Facciamo un applauso!", time:this.getRandomTime(), count:`${Math.floor(Math.random()*35)}`},
-        { name:"UniPi-Informatica", text:"Qualcuno può rispondere!!??!?!?", time:this.getRandomTime(), count:`${Math.floor(Math.random()*35)}`},
-        { name:"Gina", text:"Hello!", time:this.getRandomTime(), count:`${Math.floor(Math.random()*35)}`},
+    private names = ["Giovanni","Giangiorgio", "Natascia", "Fabrizio", "Rianldo", "Michele", "Alice", "Iride"]
+
+    private chatList:Chat[] = [
+        { id:'1', group:false, name:"Hannah", text:"Che fai stasera?", time:"13:38", count:`2`,
+            messages:[
+              {sender:"Hannah", text:"Che fai stasera?", time:"13:38"},
+              {sender:"Hannah", text:"Tutto ok", time:"13:38"},
+              {sender:"sent", text:"Tutto bene, te?", time:"13:35"},
+              {sender:"sent", text:"Ehi", time:"13:35"},
+              {sender:"Hannah", text:"Ciao, come va?", time:"13:33"}
+          ]},
+        { id:'2', group:false, name:"Pippo", text:"Ok grazie", time:"20:12", count:`1`,
+            messages:[
+              {sender:"Pippo", text:"Ok grazie", time:"20:12"},
+              {sender:"sent", text:"Ti ho usato come variabile anche oggi!", time:"19:02"},
+            ]},
+        { id:'3', group:false, name:"Paolo", text:"Facciamo un applauso!", time:"10:42", count:`1`,
+            messages:[
+              {sender:"Paolo", text:"Facciamo un applauso!", time:"10:42"},
+            ]},
+        { id:'4', group:true, name:"UniPi-Informatica", text:"Qualcuno può rispondere!!??!?!?", time:"03:12", count:`3`,
+        messages:[
+          {sender:"Giovanni", text:"Qualcuno può rispondere!!??!?!?", time:"03:12"},
+          {sender:"Giovanni", text:"Quando c'è il compitino di IIA", time:"02:33"},
+          {sender:"Giangiorgio", text:"hanno avviato la riunione", time:"14:12"},
+        ]},
     ];
 
-    private messages:Message[] = [
-        {sr:"received", text:"Che fai stasera?", time:"13:38"},
-        {sr:"received", text:"Tutto ok", time:"13:38"},
-        {sr:"sent", text:"Tutto bene, te?", time:"13:35"},
-        {sr:"sent", text:"Ehi", time:"13:35"},
-        {sr:"received", text:"Ciao, come va?", time:"13:33"}
-    ];
-
-    getLists() {
-        return this.lists;
+    getChatList() {
+        return this.chatList;
     }
 
-    getMessages() {
-        return this.messages;
+    getChat(id:string) {
+        return this.chatList.find(c=>c.id===id);
     }
 
-    addMessage(msg:Message) {
-        this.messages.unshift(msg);
+    getMessages(id:string) {
+        return this.getChat(id)?.messages ?? [];
     }
-}
 
-export function useContacts() {
-    const db = MockDB.getInstance();
-    const [contacts] = useState(db.getLists());
+    isGroup(name:string) {
+        return this.getChat(name)?.group ?? false;
+    }
+
+    randomNameGenerator() {
+        return this.names[Math.floor(Math.random()*this.names.length)]
+    }
+
+    addChat(group:boolean, name:string) {
+        this.chatList = [...this.chatList, {
+            id:window.crypto.randomUUID(),
+            group:group,
+            name:name,
+            text:'',
+            time:'',
+            count:'',
+            messages:[]
+        }]
+    }
     
-    return {
-        contacts
-    }
-}
-
-export function useMessages() {
-    const db = MockDB.getInstance();
-    const [messages, setMessages] = useState(db.getMessages());
-
-    const addMessage = (sr:'sent'|'received', text:string) => {
+    addMessage(id:string, sender:'sent'|'received', text:string) {
         const currentTime = new Date();
         const hours = currentTime.getHours().toString().padStart(2,'0');
         const minutes = currentTime.getMinutes().toString().padStart(2, '0');
         const msg:Message = {
-            sr:sr,
+            sender:this.isGroup(id)&&sender==="received"?this.randomNameGenerator():sender,
             text:text,
             time:hours+':'+minutes
         }
-        db.addMessage(msg)
-        setMessages(db.getMessages())
+        this.chatList = this.chatList.map(c => c.id===id
+        ? {...c, messages: [msg, ...c.messages]}
+        : c);
+    }
+}
+
+export function useDB() {
+    const db = MockDB.getInstance();
+    const [chatList, setChatList] = useState(db.getChatList());
+
+    const addChat = (group:boolean, name:string) => {
+        db.addChat(group, name);
+        setChatList(db.getChatList());
+        console.log("pippo")
+    } 
+
+    const addMessage = (id:string, sender:'sent'|'received', text:string) => {
+        db.addMessage(id, sender, text);
+        setChatList(db.getChatList());
     }
     
     return {
-        messages, addMessage
+        chatList, addChat, addMessage
     }
 }
