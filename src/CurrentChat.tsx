@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import { OpenedChat } from "./OpenedChat";
-import { useDB, MockDB } from "./db";
+import { MockDB } from "./db";
 import { useLoaderData } from "react-router-dom";
 
 export function CurrentChat ({addMessage}:{addMessage:(id:string, sr:'sent'|'received', msg:string)=>void}) {

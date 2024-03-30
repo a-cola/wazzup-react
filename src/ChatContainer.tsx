@@ -1,5 +1,5 @@
 import React from "react"
-import { useDB, Chat } from "./db"
+import { Chat } from "./db"
 import { ChatSmall } from "./ChatSmall";
 import { useNavigate } from "react-router-dom";
 

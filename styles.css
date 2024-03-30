@@ -7,6 +7,8 @@ body {
     display: flex;
     height: 100vh;
 }
+
+/* Lista Chat */
 .chat-list {
     background-color: gray;
     width:20%;
@@ -99,6 +101,7 @@ button:hover {
     border-radius: 50%;
 }
 
+/* Chat Aperta */
 .no-chat {
     display: flex;
     height: 100%;
@@ -183,4 +186,66 @@ button:hover {
     padding: 5px;
     border-top: solid 1px gray;
     background-color: lightgreen !important;
+}
+
+/* Modale Impostazioni */
+.settings-modal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+.settings {
+    display: flex;
+    flex-direction: column;
+    background-color:rgb(230, 230, 230);
+    margin: 10% auto;
+    padding: 80px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #888;
+    width:40%;
+    color:rgb(52, 52, 52);
+    font-size:x-large;
+    border-radius: 20px;
+    position: relative;
+}
+.settings > :nth-child(2) {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.settings > :last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.close-settings {
+    margin-left: auto;
+}
+.close-settings button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+}
+.close-settings button:hover{
+    background-color: rgb(128, 128, 128);
+}
+.setting-line {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border: 1px solid rgb(114, 114, 114);
+}
+.setting-line:hover {
+    background-color: rgb(128, 128, 128);
+}
+.icon {
+    display: flex;
+    height: 20px;
+    width: 20px;
+    padding: 20px;
 }

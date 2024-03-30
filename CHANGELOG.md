@@ -1,3 +1,11 @@
+## [0.0.2]
+
+### Aggiunto
+- Aggiunta modale impostazioni fittizie
+
+### Modifiche
+- Rimossi import non utilizzati
+
 ## [0.0.1]
 
 ### Aggiunto
