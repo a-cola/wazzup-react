@@ -3,7 +3,7 @@ import React from "react";
 export function Settings ({settingsVisibility, setSettingsVisibility}:{settingsVisibility:string, setSettingsVisibility:React.Dispatch<React.SetStateAction<string>>}) {
     const settings:string[]=["Generale", "Account", "Chat", "Video e audio", "Notifiche", "Personalizzazione", "Archiviazione", "Collegamenti rapidi", "Aiuto", "Profilo"]
     return <>
-        <div className="settings-modal" style={{display:status}}>
+        <div className="settings-modal" style={{display:settingsVisibility}}>
             <div className="settings">
                 <div className="close-settings">
                     <button onClick={()=>setSettingsVisibility("none")}>&times;</button>
