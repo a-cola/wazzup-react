@@ -1,3 +1,14 @@
+## [0.0.3]
+
+### Aggiunto
+- Contesto MsgContext
+
+### Modifiche
+- Sostituzione del passaggio delle props con l'utilizzo di useContext
+
+### Fix
+- Adesso se si ricarica la pagina su una chat creata non verrà più visualizzato l'errore
+
 ## [0.0.2]
 
 ### Aggiunto

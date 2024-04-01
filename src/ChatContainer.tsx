@@ -1,15 +1,20 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Chat } from "./db"
 import { ChatSmall } from "./ChatSmall";
 import { useNavigate } from "react-router-dom";
+import { MsgContext } from "./MsgContext";
 
-export function ChatContainer({chatList}:{chatList:Chat[]}) {
+export function ChatContainer() {
     const navigate = useNavigate();
 
     const openChat = (chat:Chat) => {
         chat.count='';
         navigate('/chatlist/'+chat.id)
     }
+
+    const MsgCtx = useContext(MsgContext);
+
+    const chatList = MsgCtx.chatList;
     
     return <>
         <div className="chat-container">

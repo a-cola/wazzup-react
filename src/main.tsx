@@ -8,7 +8,7 @@ const router = createBrowserRouter(
   [
     {path:'/', element:<StartPage />, errorElement: <p>Route non esiste</p>},
     {path:'/chatlist', element:<StartPage />},
-    {path:'/chatlist/:id', element:<ChatPage />, loader: listLoader}
+    {path:'/chatlist/:id', element:<ChatPage />, loader: listLoader, errorElement: <p>Route non esiste</p>}
   ]
 )
 

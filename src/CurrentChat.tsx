@@ -1,12 +1,16 @@
-import React from "react"
+import React, { useContext } from "react"
 import { OpenedChat } from "./OpenedChat";
 import { MockDB } from "./db";
 import { useLoaderData } from "react-router-dom";
+import { MsgContext } from "./MsgContext";
 
-export function CurrentChat ({addMessage}:{addMessage:(id:string, sr:'sent'|'received', msg:string)=>void}) {
+export function CurrentChat () {
     const id = useLoaderData() as string;
 
     const db = MockDB.getInstance();
+
+    const MsgCtx = useContext(MsgContext);
+    const addMessage = MsgCtx.addMessage;
 
     const isOnline = () => {
         return Math.random() < 0.1 ? "online" : `Last access ${Math.floor(Math.random()*59+1)} minutes ago`;

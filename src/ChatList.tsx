@@ -1,15 +1,14 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { ChatContainer } from "./ChatContainer"
-import { Chat } from "./db"
 import { Settings } from "./Settings";
+import { MsgContext } from "./MsgContext";
 
-interface ChatListProps {
-    chatList:Chat[];
-    addChat:(group:boolean, name:string)=>void;
-}
-
-export function ChatList ({chatList, addChat}:ChatListProps) {
+export function ChatList () {
     const [settingsVisibility, setSettingsVisibility] = useState("none");
+
+    const MsgCtx = useContext(MsgContext);
+    const chatList = MsgCtx.chatList;
+    const addChat = MsgCtx.addChat;
 
     const handleKeyUp = (e) => {
         if(e.key === 'Enter') {
@@ -72,7 +71,7 @@ export function ChatList ({chatList, addChat}:ChatListProps) {
                     onKeyUp={e=>handleKeyUp(e)}
                     />
             </div>
-            <ChatContainer chatList={chatList}/>
+            <ChatContainer />
         </section>
     </>
 }
