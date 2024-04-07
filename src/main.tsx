@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom/client'
 import { ChatPage } from './ChatPage'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { StartPage } from './StartPage'
+import { ErrorPage } from './ErrorPage'
 
 const router = createBrowserRouter(
   [
-    {path:'/', element:<StartPage />, errorElement: <p>Route non esiste</p>},
+    {path:'/', element:<StartPage />, errorElement: <ErrorPage />},
     {path:'/chatlist', element:<StartPage />},
-    {path:'/chatlist/:id', element:<ChatPage />, loader: listLoader, errorElement: <p>Route non esiste</p>}
+    {path:'/chatlist/:id', element:<ChatPage />, loader: listLoader, errorElement: <ErrorPage />}
   ]
 )
 

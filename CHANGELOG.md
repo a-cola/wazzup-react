@@ -1,3 +1,8 @@
+## [0.0.4]
+
+### Aggiunto
+- Error Page
+
 ## [0.0.3]
 
 ### Aggiunto
