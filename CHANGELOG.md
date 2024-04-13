@@ -1,3 +1,8 @@
+## [0.0.5]
+
+### Aggiunto
+- L'applicazione adesso è installabile
+
 ## [0.0.4]
 
 ### Aggiunto
